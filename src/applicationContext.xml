@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	     xmlns:aop="http://www.springframework.org/schema/aop"
+	     xmlns:tx="http://www.springframework.org/schema/tx"
+	     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+   
+	<bean id="userDao" class="edu.nju.frs.dao.impl.UserDaoImpl"></bean>
+	<bean id="projectDao" class="edu.nju.frs.dao.impl.ProjectDaoImpl"></bean>
+	<bean id="expenseClaimDao" class="edu.nju.frs.dao.impl.ExpenseClaimDaoImpl"></bean>
+	<bean id="projectUserDao" class="edu.nju.frs.dao.impl.ProjectUserDaoImpl"></bean>
+	
+	<bean id="userService" class="edu.nju.frs.service.impl.UserServiceImpl">
+		<property name="userDao">
+			<ref bean="userDao"/>
+		</property>
+	</bean>
+	
+	<bean id="projectService" class="edu.nju.frs.service.impl.ProjectServiceImpl">
+		<property name="projectDao">
+			<ref bean="projectDao"/>
+		</property>
+		<property name="expenseClaimDao">
+			<ref bean="expenseClaimDao"/>
+		</property>
+		<property name="userDao">
+			<ref bean="userDao"/>
+		</property>
+	</bean>
+	
+	<bean id="projectUserService" class="edu.nju.frs.service.impl.ProjectUserServiceImpl">
+		<property name="projectUserDao">
+			<ref bean="projectUserDao"/>
+		</property>
+	</bean>
+	
+	<bean id="expenseClaimService" class= "edu.nju.frs.service.impl.ExpenseClaimServiceImpl">
+		<property name="expenseClaimDao">
+			<ref bean="expenseClaimDao"/>
+		</property>
+		<property name="projectService">
+			<ref bean="projectService"/>
+		</property>
+		<property name="userService">
+			<ref bean="userService"/>
+		</property>
+	</bean>
+	<!-- user 相关Action -->
+	<bean id="loginAction" class="edu.nju.frs.action.LoginAction">
+		<property name="userService">
+			<ref bean="userService"/>
+		</property>
+	</bean>
+	
+	<bean id="commonUserJoinProjectAction" class="edu.nju.frs.action.CommonUserJoinProjectAction">
+		<property name="projectService">
+			<ref bean="projectService"/>
+		</property>
+		<property name="userService">
+			<ref bean="userService"/>
+		</property>
+		<property name="projectUserService">
+			<ref bean="projectUserService"/>
+		</property>
+	</bean>
+	
+	<bean id="commonUserManageProjectAction" class="edu.nju.frs.action.CommonUserManageProjectAction">
+		<property name="projectService">
+			<ref bean="projectService"/>
+		</property>
+		<property name="userService">
+			<ref bean="userService"/>
+		</property>
+		<property name="projectUserService">
+			<ref bean="projectUserService"/>
+		</property>
+	</bean>
+	
+	<bean id="editProjectAction" class="edu.nju.frs.action.EditProjectAction">
+		<property name="projectService">
+			<ref bean="projectService"/>
+		</property>
+	</bean>
+	
+	<bean id="listUserAction" class="edu.nju.frs.action.ListUserAction">
+		<property name="userService">
+			<ref bean="userService"/>
+		</property>
+	</bean>
+	<bean id="listProjectAction" class="edu.nju.frs.action.ListProjectAction">
+		<property name="userService">
+			<ref bean="userService"/>
+		</property>
+		<property name="projectService">
+			<ref bean="projectService"/>
+		</property>
+	</bean>
+	
+	<bean id="financialExaminerPageAction" class="edu.nju.frs.action.FinancialExaminerPageAction">
+		<property name="expenseClaimService">
+			<ref bean="expenseClaimService"/>
+		</property>
+	</bean>
+	
+	<bean id="financialManagerPageAction" class="edu.nju.frs.action.FinancialManagerPageAction">
+		<property name="userService">
+			<ref bean="userService"/>
+		</property>
+		<property name="projectService">
+			<ref bean="projectService"/>
+		</property>
+	</bean>
+	
+	<bean id="registerAction" class="edu.nju.frs.action.RegisterAction">
+		<property name="userService">
+			<ref bean="userService"/>
+		</property>
+	</bean>
+	
+	
+	<bean id="viewProjectAction" class="edu.nju.frs.action.ViewProjectAction">
+		<property name="projectService">
+			<ref bean="projectService"/>
+		</property>
+		<property name="userService">
+			<ref bean="userService"/>
+		</property>
+	</bean>
+	
+	<bean id="joinViewProjectAction" class="edu.nju.frs.action.JoinViewProjectAction">
+		<property name="projectService">
+			<ref bean="projectService"/>
+		</property>
+	</bean>
+	
+	<bean id="updateUserAction" class="edu.nju.frs.action.UpdateUserAction">
+		<property name="userService">
+			<ref bean="userService"/>
+		</property>
+	</bean>
+	
+	<!-- project 相关Action -->
+	<bean id="createProjectAction" class="edu.nju.frs.action.CreateProjectAction">
+		<property name="projectService">
+			<ref bean="projectService"/>
+		</property>
+	</bean>
+	
+	<!-- expenseClaim 相关Action -->
+	<bean id="createExpenseClaimAction" class="edu.nju.frs.action.CreateExpenseClaimAction">
+		<property name="expenseClaimService">
+			<ref bean="expenseClaimService"/>
+		</property>
+	</bean>
+	
+	<bean id="updateExpenseClaimAction" class="edu.nju.frs.action.UpdateExpenseClaimAction">
+		<property name="expenseClaimService">
+			<ref bean="expenseClaimService"/>
+		</property>
+	</bean>
+	
+	<bean id="updateTaskAction" class="edu.nju.frs.action.UpdateTaskAction">
+		<property name="projectService">
+			<ref bean="projectService"/>
+		</property>
+	</bean>
+	
+	<bean id="managerViewProjectAction" class="edu.nju.frs.action.ManagerViewProjectAction">
+		<property name="projectService">
+			<ref bean="projectService"/>
+		</property>
+		<property name="userService">
+			<ref bean="userService"/>
+		</property>
+	</bean>
+	
+	<bean id="toEditProjectAction" class="edu.nju.frs.action.ToEditProjectAction">
+		<property name="projectService">
+			<ref bean="projectService"/>
+		</property>
+		<property name="userService">
+			<ref bean="userService"/>
+		</property>
+	</bean>
+	
+	<bean id="updateProjectAction" class="edu.nju.frs.action.UpdateProjectAction">
+		<property name="projectService">
+			<ref bean="projectService"/>
+		</property>
+	</bean>
+</beans>

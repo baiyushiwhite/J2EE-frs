@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+      "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+      "http://struts.apache.org/dtds/struts-2.0.dtd">
+      
+      <struts>
+      	<package name="ajax" namespace="/frs" extends="json-default">
+      		<action name="register" class="registerAction">
+      			<result type="json">
+      				<param name="root">user</param>
+      			</result>
+      		</action>
+      		
+      		<action name="updateUser" class="updateUserAction">
+      			<result type="json">
+      				<param name="root">user</param>
+      			</result>
+      		</action>
+      		
+      		<action name="updateTask" class="updateTaskAction">
+      			<result type="json">
+      				<param name="root">task</param>
+      			</result>
+      		</action>
+      	</package>
+      	
+      	<package name="struts2" namespace="/frs" extends="struts-default">
+      		<!-- user 相关Action -->
+      		<action name="manageUser" class="listUserAction">
+      			<result name="success">/managerPages/manageUser.jsp</result>
+      			<result name="fail">/user/welcome.jsp</result>
+      		</action>
+      		<action name="manageProject" class="listProjectAction">
+      			<result name="success">/managerPages/manageProject.jsp</result>
+      			<result name="fail">/user/welcome.jsp</result>
+      		</action>
+      		<action name="viewProject" class="viewProjectAction">
+      			<result name="success">/managerPages/viewProject.jsp</result>
+      			<result name="error">/user/welcome.jsp</result>	
+      		</action>
+      		
+      		<action name="joinViewProject" class="joinViewProjectAction">
+      			<result name="success">/commonUserPages/commonViewProject.jsp</result>
+      			<result name="error">/user/welcome.jsp</result>	
+      		</action>
+      		
+      		<action name="editProject" class="editProjectAction">
+      			<result name="success" type="redirectAction">
+      				<param name="actionName">viewProject</param>
+      				<param name="projectId">${projectId}</param>
+      			</result>
+      		</action>
+      		<action name="commonUserManageProject" class="commonUserManageProjectAction">
+      			<result name="success">/commonUserPages/manageProjectList.jsp</result>
+      			<result name="error">/user/welcome.jsp</result>
+      		</action>
+      		
+      		<action name="commonUserJoinProject" class="commonUserJoinProjectAction">
+      			<result name="success">/commonUserPages/joinProjectList.jsp</result>
+      			<result name="error">/user/welcome.jsp</result>
+      		</action>
+      		
+      		<action name="financialExaminerPage" class="financialExaminerPageAction">
+      			<result name="success">/user/financialExaminerPage.jsp</result>
+      			<result name="fail">/user/welcome.jsp</result>
+      		</action>
+      		
+			<action name="financialManagerPage" class="financialManagerPageAction">
+      			<result name="success">/user/financialManagerPage.jsp</result>
+      			<result name="fail">/user/welcome.jsp</result>
+      		</action>      		
+      		
+      		<action name="login" class="loginAction">
+      			<result name="CommonUser" type="redirectAction">
+      				<param name="actionName">commonUserJoinProject</param>
+      			</result>	
+      			<result name="ManagerUser" type="redirectAction">
+      				<param name="actionName">manageUser</param>
+      				<param name="userId">${userId}</param>
+      				<param name="realName">${realName}</param>
+      			</result>
+      			<result name="FinancialExaminers" type="redirectAction">
+      				<param name="actionName">financialExaminerPage</param>
+      				<param name="userId">${userId}</param>
+      				<param name="realName">${realName}</param>
+      			</result>
+      			<result name="FinancialManager" type="redirectAction">
+      				<param name="actionName">financialManagerPage</param>
+      				<param name="userId">${userId}</param>
+      				<param name="realName">${realName}</param>
+      			</result>
+      			<result name="fail">/user/welcome.jsp</result>
+      		</action>
+      		
+      	
+      		<!-- project 相关Action -->
+      		<action name="createProject" class="createProjectAction">
+      			<result name="success" type="redirectAction">
+      				<param name="actionName">manageProject</param>
+      				<param name="info">${info}</param>
+      				<param name="error">${error}</param>
+      				<param name="error">${projectId}</param>
+      			</result>
+      		</action>
+      		
+      		<!-- expenseClaim 相关的Action -->
+      		<action name="createExpenseClaim" class="createExpenseClaimAction">
+      			<result name="success" type="redirectAction">
+      				<param name="actionName">joinViewProject</param>
+      				<param name="info">${info}</param>
+      				<param name="error">${error}</param>
+      				<param name="projectId">${projectId}</param>
+      			</result>
+      		</action>
+      		
+      		<action name="updateExpenseClaim" class="updateExpenseClaimAction">
+      			<result name="HOST" type="redirectAction">
+      				<param name="actionName">viewProject</param>
+      				<param name="info">${info}</param>
+      				<param name="error">${error}</param>
+      				<param name="projectId">${projectId}</param>
+      			</result>
+      			<result name="FE" type="redirectAction">
+      				<param name="actionName">financialExaminerPage</param>
+      				<param name="info">${info}</param>
+      				<param name="error">${error}</param>
+      			</result>
+      		</action>
+      		
+      		<action name="managerViewProject" class="managerViewProjectAction">
+      			<result name="success">/managerPages/managerViewProject.jsp</result>
+      			<result name="error">/user/welcome.jsp</result>
+      		</action>
+      		
+      		<action name="toEditProject" class="toEditProjectAction">
+      			<result name="success">/managerPages/editProject.jsp</result>
+      		</action>
+      		
+      		<action name="updateProject" class="updateProjectAction">
+      			<result name="success" type="redirectAction">
+      				<param name="actionName">viewProject</param>
+      				<param name="projectId">${projectId}</param>
+      			</result>
+      		</action>
+      	</package>
+      </struts>

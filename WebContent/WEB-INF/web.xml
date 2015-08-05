@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="WebApp_9" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+
+  <display-name>FRS</display-name>
+  <filter>
+  	<filter-name>struts2</filter-name>
+  	<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class><!-- 固定值 -->
+  </filter>
+  
+  <filter-mapping>
+  	<filter-name>struts2</filter-name><!-- 保证filter中的filter-name和filter-mapping中的filter-name保持一致 -->
+  	<url-pattern>/*</url-pattern><!-- 表示对在路径里输入任何内容都会引发该过滤器。 -->
+  </filter-mapping>
+  
+  <listener>
+  	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  <context-param>
+  	<param-name>contextConfigLocation</param-name>
+  	<param-value>/WEB-INF/classes/applicationContext.xml</param-value>
+  </context-param>
+  
+</web-app>
